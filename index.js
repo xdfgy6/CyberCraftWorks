@@ -1,10 +1,27 @@
-function coinChange(coins, amount) {
-  const dp = new Array(amount + 1).fill(amount + 1);
-  dp[0] = 0;
-  for (const coin of coins) {
-    for (let i = coin; i <= amount; i++) {
-      dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-    }
-  }
-  return dp[amount] > amount ? -1 : dp[amount];
+function Trie() {
+  this.root = {};
 }
+Trie.prototype.insert = function (word) {
+  let node = this.root;
+  for (const char of word) {
+    if (!node[char]) node[char] = {};
+    node = node[char];
+  }
+  node.isEnd = true;
+};
+Trie.prototype.search = function (word) {
+  let node = this.root;
+  for (const char of word) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return node.isEnd === true;
+};
+Trie.prototype.startsWith = function (prefix) {
+  let node = this.root;
+  for (const char of prefix) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return true;
+};
