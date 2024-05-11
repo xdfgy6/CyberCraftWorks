@@ -1,27 +1,17 @@
-function Trie() {
-  this.root = {};
+function countPrimes(n) {
+  const isPrime = new Array(n).fill(true);
+  isPrime[0] = false;
+  isPrime[1] = false;
+  for (let i = 2; i * i < n; i++) {
+    if (isPrime[i]) {
+      for (let j = i * i; j < n; j += i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+  let count = 0;
+  for (let i = 2; i < n; i++) {
+    if (isPrime[i]) count++;
+  }
+  return count;
 }
-Trie.prototype.insert = function (word) {
-  let node = this.root;
-  for (const char of word) {
-    if (!node[char]) node[char] = {};
-    node = node[char];
-  }
-  node.isEnd = true;
-};
-Trie.prototype.search = function (word) {
-  let node = this.root;
-  for (const char of word) {
-    if (!node[char]) return false;
-    node = node[char];
-  }
-  return node.isEnd === true;
-};
-Trie.prototype.startsWith = function (prefix) {
-  let node = this.root;
-  for (const char of prefix) {
-    if (!node[char]) return false;
-    node = node[char];
-  }
-  return true;
-};
