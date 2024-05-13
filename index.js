@@ -1,12 +1,12 @@
-function rotate(matrix) {
-  const n = matrix.length;
-  for (let i = 0; i < Math.floor(n / 2); i++) {
-    for (let j = i; j < n - i - 1; j++) {
-      const temp = matrix[i][j];
-      matrix[i][j] = matrix[n - j - 1][i];
-      matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
-      matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
-      matrix[j][n - i - 1] = temp;
+function bubbleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
     }
   }
+  return arr;
 }
