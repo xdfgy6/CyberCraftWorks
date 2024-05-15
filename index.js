@@ -1,33 +1,14 @@
-function solveNQueens(n) {
-  const result = [];
-  const board = Array.from({ length: n }, () =>
-    Array.from({ length: n }, () => "."),
-  );
-  backtrack(0);
-  return result;
-  function backtrack(row) {
-    if (row === n) {
-      result.push(board.map((row) => row.join("")));
-      return;
-    }
-    for (let col = 0; col < n; col++) {
-      if (isValid(row, col)) {
-        board[row][col] = "Q";
-        backtrack(row + 1);
-        board[row][col] = ".";
+function lengthOfLIS(nums) {
+  if (nums.length === 0) return 0;
+  const dp = new Array(nums.length).fill(1);
+  let max = 1;
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
+        max = Math.max(max, dp[i]);
       }
     }
   }
-  function isValid(row, col) {
-    for (let i = 0; i < row; i++) {
-      if (board[i][col] === "Q") return false;
-    }
-    for (let i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-      if (board[i][j] === "Q") return false;
-    }
-    for (let i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
-      if (board[i][j] === "Q") return false;
-    }
-    return true;
-  }
+  return max;
 }
